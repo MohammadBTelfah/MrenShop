@@ -14,7 +14,7 @@ export default function Products() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://127.0.1:5003/api/products/getallproduct");
+        const response = await axios.get("http://127.0.0.1:5003/api/products/getallproduct");
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -25,20 +25,42 @@ export default function Products() {
     fetchProducts();
   }, [navigate]);
 
-  return (
+return (
     <div>
-      <h1>Products</h1>
-      <div className="products-list">
-        {products.map((product) => (
-          <Box key={product._id} sx={{ border: '1px solid #ccc', padding: 2, margin: 2 }}>
-            <Typography variant="h6">{product.name}</Typography>
-            <Typography variant="body1">{product.description}</Typography>
-            <Typography variant="body2">Price: ${product.price}</Typography>
-            {product.image && <img src={product.image} alt={product.name} width={100} />}
-          </Box>
-        ))}
-      </div>
+        <h1>Products</h1>
+        <Box sx={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                    <tr>
+                        <th style={{ border: '1px solid #ccc', padding: 8 }}>Image</th>
+                        <th style={{ border: '1px solid #ccc', padding: 8 }}>Name</th>
+                        <th style={{ border: '1px solid #ccc', padding: 8 }}>Description</th>
+                        <th style={{ border: '1px solid #ccc', padding: 8 }}>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {products.map((product) => (
+                        <tr key={product._id}>
+                            <td style={{ border: '1px solid #ccc', padding: 8 }}>
+                                {product.image && (
+                                    <img src={product.image} alt={product.name} width={80} />
+                                )}
+                            </td>
+                            <td style={{ border: '1px solid #ccc', padding: 8 }}>
+                                <Typography variant="body1">{product.name}</Typography>
+                            </td>
+                            <td style={{ border: '1px solid #ccc', padding: 8 }}>
+                                <Typography variant="body2">{product.description}</Typography>
+                            </td>
+                            <td style={{ border: '1px solid #ccc', padding: 8 }}>
+                                ${product.price}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </Box>
     </div>
-  );
+);
 
 }
