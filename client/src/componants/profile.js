@@ -1,5 +1,4 @@
-import { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Button } from "@mui/material";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -17,7 +16,6 @@ const style = {
   p: 4,
 };
 export default function Profile(props) {
-    const navigate = useNavigate();
     const { profileData } = props;
 
   const [open, setOpen] = useState(false);

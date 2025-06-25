@@ -19,30 +19,12 @@ import { DemoProvider, useDemoRouter } from '@toolpad/core/internal';
 import { useEffect,useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import axios from 'axios';
 import Profile from './profile';
+import Products from './products';
 
-const NAVIGATION = [
-  {
-    kind: 'header',
-    title: 'Main items',
-  },
-  {
-    segment: 'dashboard',
-    title: 'Dashboard',
-    icon: <DashboardIcon />,
-  },
-  {
-    segment: 'orders',
-    title: 'Orders',
-    icon: <ShoppingCartIcon />,
-  },
-    {
-    segment: 'Profile',
-    title: 'Profile',
-    icon: <AccountBoxIcon />,
-  },
-];
+
 
 const demoTheme = createTheme({
   cssVariables: {
@@ -74,12 +56,19 @@ function DemoPageContent({ pathname,profileData}) {
     {pathname ==="/Profile" && (
       <Profile profileData={profileData} />
     )}
+
     {pathname ==="/dashboard" && (
       <Typography variant="h4" gutterBottom>
         Page Dashboard
                 </Typography>
     )}
-      {/* <Typography>Dashboard content for {pathname}</Typography> */}
+        {pathname ==="/products" && (
+      <Typography variant="h4" gutterBottom>
+        <Products />
+      </Typography>
+    )}
+
+
     </Box>
   );
 }
@@ -156,6 +145,37 @@ function CustomAppTitle() {
 function DashboardLayoutSlots(props) {
     const navigate = useNavigate();
     const [profileData, setProfileData] = useState({});
+    const [isAdmin, setIsAdmin] = useState(false);
+    const NAVIGATION = [
+  {
+    kind: 'header',
+    title: 'Main items',
+  },
+  {
+    segment: 'dashboard',
+    title: 'Dashboard',
+    icon: <DashboardIcon />,
+  },
+  {
+    segment: 'orders',
+    title: 'Orders',
+    icon: <ShoppingCartIcon />,
+  },
+    {
+    segment: 'Profile',
+    title: 'Profile',
+    icon: <AccountBoxIcon />,
+  },
+  ...(isAdmin
+    ? [{
+        segment: 'products',
+        title: 'Products',
+        icon: <InventoryIcon />,
+      }]
+    : [])
+
+];
+
     useEffect(()=>{
         //  take the token from local storage and set it in the header of the axios request
         const token = localStorage.getItem('token');
@@ -168,6 +188,7 @@ function DashboardLayoutSlots(props) {
                         }
                     })
                     console.log("Profile data:", res);
+                    setIsAdmin(res.data.role === 'admin');
                     setProfileData(res.data);
                 } catch (error) {
                     console.error("Error fetching profile data:", error);
