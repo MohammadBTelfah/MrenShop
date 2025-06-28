@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 
 
 export default function Products() {
+
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
@@ -15,6 +16,7 @@ export default function Products() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:5003/api/products/getallproduct");
+        console.log("Products fetched:", response.data);
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);

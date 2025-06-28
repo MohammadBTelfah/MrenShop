@@ -27,8 +27,7 @@ exports.getProductById = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
   try {
-    const { name, description, price, category } = req.body;
-    const image = req.file ? req.file.path : null;
+    const { name, description, price, image, category } = req.body;
 
     const newProduct = new products({
       name,
