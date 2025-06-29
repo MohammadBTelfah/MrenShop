@@ -18,5 +18,6 @@ router.post('/register', userController.register);
 router.post('/login', userController.login);
 router.get('/profile', auth, userController.getProfile);
 router.post('/change-password', auth, userController.changePassword);
+router.get('/getallusers',  userController.getAllUsers); // Get all users
 
 module.exports = router;

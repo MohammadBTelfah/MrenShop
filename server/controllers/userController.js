@@ -74,3 +74,12 @@ exports.changePassword = async (req, res) => {
     
   }
 }
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select('-password');
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error.message);
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+}

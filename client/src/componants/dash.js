@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -27,7 +27,8 @@ import { DemoProvider, useDemoRouter } from '@toolpad/core/internal';
 
 import Profile from './profile';
 import Products from './products';
-
+import Catego from '../componants/catego'
+import Users from '../componants/User';
 const demoTheme = createTheme({
   cssVariables: {
     colorSchemeSelector: 'data-toolpad-color-scheme',
@@ -65,6 +66,18 @@ function DemoPageContent({ pathname, profileData }) {
         <Typography variant="h4" gutterBottom>
           <Products />
         </Typography>
+      )}
+      {pathname === "/categories" && (
+        <Typography variant="h4" gutterBottom>
+          <Catego />
+        </Typography>
+        
+      )}
+      {pathname === "/users" && (
+        <Typography variant="h4" gutterBottom>
+          <Users />
+        </Typography>
+        
       )}
     </Box>
   );
@@ -155,7 +168,11 @@ function DashboardLayoutSlots(props) {
     { segment: 'orders', title: 'Orders', icon: <ShoppingCartIcon /> },
     { segment: 'Profile', title: 'Profile', icon: <AccountBoxIcon /> },
     ...(isAdmin
-      ? [{ segment: 'products', title: 'Products', icon: <InventoryIcon /> }]
+      ? [
+          { segment: 'products', title: 'Products', icon: <InventoryIcon /> },
+          { segment: 'categories', title: 'Categories', icon: <InventoryIcon /> },
+          { segment: 'users', title: 'Users', icon: <AccountBoxIcon /> },
+        ]
       : []),
   ];
 
