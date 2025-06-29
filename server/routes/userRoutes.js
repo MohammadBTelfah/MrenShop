@@ -19,5 +19,7 @@ router.post('/login', userController.login);
 router.get('/profile', auth, userController.getProfile);
 router.post('/change-password', auth, userController.changePassword);
 router.get('/getallusers',  userController.getAllUsers); // Get all users
+router.put('/update/:id', auth, userController.updateUser); // Update user by ID
+router.delete('/deleteUser/:id', auth, userController.deleteUser); // Delete user by ID
 
 module.exports = router;

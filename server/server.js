@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const productsRoutes = require('./routes/productsRoutes');
-const categoryRoutes = require('./routes/categoiesRoutes');
+const categoRoutes = require('./routes/categoRoutes');
 //  import and user cors
 const cors = require('cors');
 
@@ -20,8 +20,8 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads')); // Serve static profile images
 app.use('/api/users', userRoutes);
 app.use('/api/products', productsRoutes);
-// Import user routes
-app.use('/api/categories', require('./routes/categoiesRoutes')); // Import category routes
+app.use('/api/categories', categoRoutes);
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

@@ -83,3 +83,38 @@ exports.getAllUsers = async (req, res) => {
     res.status(500).json({ msg: 'Server error', error: error.message });
   }
 }
+exports.updateUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { username, email, fullName, address, phone, role } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ msg: 'User not found' });
+    user.username = username || user.username;
+    user.email = email || user.email;
+    user.fullName = fullName || user.fullName;
+    user.address = address || user.address;
+    user.phone = phone || user.phone;
+    user.role = role || user.role;
+    if (req.file) {
+      user.profileImage = req.file.path;
+    }
+    await user.save();
+    res.json({ msg: 'User updated successfully', user });
+  } catch (error) {
+    console.error("Error updating user:", error.message);
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+};
+exports.deleteUser = async (req, res) => {
+  try {
+    const deleteUser = await User.findByIdAndDelete(req.params.userId);
+    if (!deleteUser) return res.status(404).json({ msg: 'User not found' });
+    res.json({ msg: 'User deleted successfully' });
+    
+  } catch (error) {
+    console.error("Error deleting user:", error.message);
+    res.status(500).json({ msg: 'Server error', error: error.message });
+    
+  }
+};
